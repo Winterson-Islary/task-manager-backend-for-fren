@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authMiddleware = require("./middlewares/authMiddleware");
 const access = require("./controller/accessController");
+const taskRoute = require("./routes/taskRoute");
 const app = express();
 app
 	.use(express.json())
@@ -14,7 +15,7 @@ app
 // LOGIN-REGISTER
 app.use("/login/*", access.loginUser);
 app.use("/register/*", access.registerUser);
-
+app.use("/tasks/", authMiddleware, taskRoute);
 // Database Connection
 app.listen(process.env.PORT, () => {
 	mongoose
