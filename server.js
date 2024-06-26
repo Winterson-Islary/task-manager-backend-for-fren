@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authMiddleware = require("./middlewares/authMiddleware");
-
+const access = require("./controller/accessController");
 const app = express();
 app
 	.use(express.json())
@@ -12,8 +12,8 @@ app
 	.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 
 // LOGIN-REGISTER
-app.use("/login/*", login);
-app.use("/register/*", register);
+app.use("/login/*", access.loginUser);
+app.use("/register/*", access.registerUser);
 
 // Database Connection
 app.listen(process.env.PORT, () => {
