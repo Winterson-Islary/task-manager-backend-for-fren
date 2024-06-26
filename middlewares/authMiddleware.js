@@ -25,6 +25,7 @@ const authMiddleware = async (req, res, next) => {
 				httpOnly: true,
 				secure: true,
 			});
+			res.userId = verified_refresh.id; // To also pass the { _id } to the receiver
 		}
 	} catch (error) {
 		return res.status(401).json({
