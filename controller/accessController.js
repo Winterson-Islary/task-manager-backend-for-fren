@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const genToken = require("../helpers/genTokens");
-const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
 	try {
@@ -41,10 +40,12 @@ const loginUser = async (req, res) => {
 			return res.status(401).json({ message: "invalid credentials" });
 		}
 		const accessToken = genToken.generateAccessToken({
+			id: userDetails._id,
 			name: userDetails.name,
 			email: userDetails.email,
 		});
 		const refreshToken = genToken.generateRefreshToken({
+			id: userDetails._id,
 			name: userDetails.name,
 			email: userDetails.email,
 		});
