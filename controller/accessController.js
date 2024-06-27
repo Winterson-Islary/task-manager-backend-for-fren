@@ -49,12 +49,13 @@ const loginUser = async (req, res) => {
 			name: userDetails.name,
 			email: userDetails.email,
 		});
-		res.cookie(ACCESS_TOKEN, accessToken, { httpOnly: true, secure: true });
-		res.cookie(REFRESH_TOKEN, refreshToken, { httpOnly: true, secure: true });
+		res.cookie("ACCESS_TOKEN", accessToken, { httpOnly: true, secure: true });
+		res.cookie("REFRESH_TOKEN", refreshToken, { httpOnly: true, secure: true });
 		return res.status(200).json({ message: "login successful" });
 	} catch (error) {
+		console.log(error);
 		return res.status(500).json({ message: "unexpected server error" });
 	}
 };
 
-modules.export = { registerUser, loginUser };
+module.exports = { registerUser, loginUser };
