@@ -13,9 +13,9 @@ app
 	.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 
 // LOGIN-REGISTER
-app.use("/login/*", access.loginUser);
-app.use("/register/*", access.registerUser);
-app.use("/tasks/", authMiddleware, taskRoute);
+app.use("/login", access.loginUser);
+app.use("/register", access.registerUser);
+app.use("/tasks", authMiddleware, taskRoute);
 // Database Connection
 app.listen(process.env.PORT, () => {
 	mongoose
