@@ -37,7 +37,7 @@ const authMiddleware = async (req, res, next) => {
 
 async function verifyToken(token) {
 	try {
-		const verification = await jwt.verify(token, process.env.JWT_SECRET);
+		const verification = await jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 		if (!verification) {
 			return false;
 		}
