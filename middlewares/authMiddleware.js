@@ -21,7 +21,7 @@ const authMiddleware = async (req, res, next) => {
 				name: verified_refresh.name,
 				email: verified_refresh.email,
 			};
-			res.cookie(ACCESS_TOKEN, genToken.generateAccessToken(data), {
+			res.cookie("ACCESS_TOKEN", genToken.generateAccessToken(data), {
 				httpOnly: true,
 				secure: true,
 			});
