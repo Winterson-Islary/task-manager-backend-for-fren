@@ -51,7 +51,9 @@ const loginUser = async (req, res) => {
 		});
 		res.cookie("ACCESS_TOKEN", accessToken, { httpOnly: true, secure: true });
 		res.cookie("REFRESH_TOKEN", refreshToken, { httpOnly: true, secure: true });
-		return res.status(200).json({ message: "login successful" });
+		return res
+			.status(200)
+			.json({ username: userDetails.name, message: "login successful" });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: "unexpected server error" });
