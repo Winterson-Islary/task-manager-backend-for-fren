@@ -6,7 +6,7 @@ const getTasks = async (req, res) => {
 		const user_tasks = await Task.find().where("creatorId").equals(user_id);
 		return res.status(201).json({
 			message: "query executed successfully",
-			data: user_tasks,
+			tasks: user_tasks,
 		});
 	} catch (error) {
 		return res.status(500).json({
@@ -17,8 +17,8 @@ const getTasks = async (req, res) => {
 const createTask = async (req, res) => {
 	try {
 		const user_id = req.userId;
-		const { title, priority, deadline, tasklist, status } = req.body;
-		if (!title || !priority || !tasklist || !status) {
+		const { title, priority, deadline, tasklist } = req.body;
+		if (!title || !priority || !tasklist) {
 			return res.status(400).json({
 				message: "missing values",
 			});
@@ -28,8 +28,8 @@ const createTask = async (req, res) => {
 			creatorId: user_id,
 			title: title,
 			deadline: deadline || null,
+			priority: priority,
 			tasklist: tasklist,
-			status: status,
 		});
 		await taskFinal.save();
 		return res.json({ message: "task created successfully" });
