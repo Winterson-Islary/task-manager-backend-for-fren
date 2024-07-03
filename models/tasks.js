@@ -1,4 +1,14 @@
 const mongoose = require("mongoose");
+const taskListSchema = new mongoose.Schema({
+	isChecked: {
+		type: Boolean,
+		require: true,
+	},
+	title: {
+		type: String,
+		require: true,
+	},
+});
 const taskSchema = new mongoose.Schema({
 	creatorId: {
 		type: mongoose.ObjectId,
@@ -16,12 +26,12 @@ const taskSchema = new mongoose.Schema({
 		type: Date,
 	},
 	tasklist: {
-		type: [String],
+		type: [taskListSchema],
 		require: true,
 	},
 	status: {
 		type: String,
-		require: true,
+		default: "todo",
 	},
 });
 
