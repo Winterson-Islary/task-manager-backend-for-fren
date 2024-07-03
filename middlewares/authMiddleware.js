@@ -6,9 +6,9 @@ const authMiddleware = async (req, res, next) => {
 		// const token = req.headers.authorization?.split(" ")[1];
 		const token = req.cookies.ACCESS_TOKEN;
 		const refresh_token = req.cookies.REFRESH_TOKEN;
-		const verified_access = token ? await verifyToken(token) : false;
+		const verified_access = token ? await verifyToken(token, "access") : false;
 		const verified_refresh = refresh_token
-			? await verifyToken(refresh_token)
+			? await verifyToken(refresh_token, "refresh")
 			: false;
 		if (!verified_access && !verified_refresh) {
 			return res.status(403).json({
@@ -35,9 +35,16 @@ const authMiddleware = async (req, res, next) => {
 	next();
 };
 
-async function verifyToken(token) {
+async function verifyToken(token, Tokentype) {
 	try {
-		const verification = await jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+		const TokenSecret =
+			Tokentype === "access"
+				? process.env.JWT_ACCESS_SECRET
+				: Tokentype === "refresh"
+					? process.env.JWT_REFRESH_SECRET
+					: "JUNK";
+		const verification = await jwt.verify(token, TokenSecret);
+
 		if (!verification) {
 			return false;
 		}
